@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog on HYJ BLOG</title>
+    <link>https://2318454078.github.io/tags/blog/</link>
+    <description>Recent content in Blog on HYJ BLOG</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>HYJ@copyright</copyright>
+    <lastBuildDate>Sat, 22 Jan 2022 13:44:37 +0800</lastBuildDate><atom:link href="https://2318454078.github.io/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>博客搭建与部署指南</title>
+      <link>https://2318454078.github.io/posts/guide_git/</link>
+      <pubDate>Sat, 22 Jan 2022 13:44:37 +0800</pubDate>
+      
+      <guid>https://2318454078.github.io/posts/guide_git/</guid>
+      <description>1.博客搭建 下载Hugo: Releases · gohugoio/hugo (github.com) 解压到 D:\Hugo\bin 目录下，并设置好环境变量 打开命令行验证是否安装完成 hugo version 选择一个目录新建网站站点 cd github hugo new site myblog 在官方网</description>
+    </item>
+    
+  </channel>
+</rss>

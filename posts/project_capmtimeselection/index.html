@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="基于CAPM的风险收益一致性择时模型（Python实现）">
+<meta itemprop="description" content="CUHK 金融市场与机构_课程项目 本文模型复现来源于华泰金工风险收益一致性择时模型研究报告 项目代码与数据：GitHub地址 项目文档：Group Project.pdf 1."><meta itemprop="datePublished" content="2022-01-22T14:39:24+08:00" />
+<meta itemprop="dateModified" content="2022-01-22T14:39:24+08:00" />
+<meta itemprop="wordCount" content="4360"><meta itemprop="image" content="https://picsum.photos/1024/768/?random">
+<meta itemprop="keywords" content="Study,Python,量化交易," /><meta property="og:title" content="基于CAPM的风险收益一致性择时模型（Python实现）" />
+<meta property="og:description" content="CUHK 金融市场与机构_课程项目 本文模型复现来源于华泰金工风险收益一致性择时模型研究报告 项目代码与数据：GitHub地址 项目文档：Group Project.pdf 1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://2318454078.github.io/posts/project_capmtimeselection/" /><meta property="og:image" content="https://picsum.photos/1024/768/?random" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-22T14:39:24+08:00" />
+<meta property="article:modified_time" content="2022-01-22T14:39:24+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://picsum.photos/1024/768/?random"/>
+
+<meta name="twitter:title" content="基于CAPM的风险收益一致性择时模型（Python实现）"/>
+<meta name="twitter:description" content="CUHK 金融市场与机构_课程项目 本文模型复现来源于华泰金工风险收益一致性择时模型研究报告 项目代码与数据：GitHub地址 项目文档：Group Project.pdf 1."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>基于CAPM的风险收益一致性择时模型（Python实现）</title>
+	<link rel="stylesheet" href="https://2318454078.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	<style>.bg-img {background-image: url('https://picsum.photos/1024/768/?random');}</style>
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://2318454078.github.io/">HYJ BLOG</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://2318454078.github.io/posts/">Posts</a>
+				<a href="https://2318454078.github.io/about-hugo/">About</a>
+				<a href="https://2318454078.github.io/tags/">Tags</a>
+				<a href="https://2318454078.github.io/categories/">Categories</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="img-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></button><button id="toc-btn" class="hdr-btn desktop-only-ib" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://twitter.com/" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://instagram.com/" target="_blank" rel="noopener me" title="Instagram"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line></svg></a><a href="https://github.com/" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://2318454078.github.io/posts/">Posts</a></li>
+			<li><a href="https://2318454078.github.io/about-hugo/">About</a></li>
+			<li><a href="https://2318454078.github.io/tags/">Tags</a></li>
+			<li><a href="https://2318454078.github.io/categories/">Categories</a></li>
+		</ul>
+	</div>
+
+
+	<div class="bg-img"></div>
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Jan 22, 2022</span></div>
+				<h1>基于CAPM的风险收益一致性择时模型（Python实现）</h1>
+			</header>
+			<div class="content">
+				<p>CUHK 金融市场与机构_课程项目</p>
+<p>本文模型复现来源于<a href="https://crm.htsc.com.cn/doc/2017/10750101/ddc7f963-1a6d-461e-9496-e6c6bf23e99f.pdf">华泰金工风险收益一致性择时模型研究报告</a></p>
+<p>项目代码与数据：<a href="https://github.com/2318454078/CAPM-TIMING-MODEL">GitHub地址</a></p>
+<p>项目文档：<a href="https://github.com/2318454078/CAPM-TIMING-MODEL/blob/main/Report_Group4.pdf">Group Project.pdf</a></p>
+<h2 id="1模型介绍">1.模型介绍<a href="#1模型介绍" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>自从20 世纪50 年代资本资产定价模型提出之后，人们习惯使用贝塔来代表资产与市场组合之间的关系。根据资本资产定价模型，假设资产的贝塔值是稳定的，那么在市场上涨的时候，贝塔高的资产应该收获更高的收益，但是市场下跌的时候也会承担更多的损失，所以贝塔值代表了资产承担市场风险的大小。通过资本资产定价模型我们找到了市场中存在的一种结构，不同资产的涨跌幅与市场组合的涨跌幅会存在相对固定的对应关系。如果反过来使用这种对应关系，就得到了一种观察市场的方法，比如当发现高贝塔的资产收益较高，低贝塔的资产收益较低时，那市场大概率处于一种上升状态，当发现高贝塔的资产收益较低，低贝塔的资产收益较高时，市场可能处于一种下跌状态，如此我们可以构造一个择时模型。</p>
+<p><strong>资本资产定价模型 (Capital Asset Pricing Model, CAPM)</strong> 是基于风险资产期望收益均衡基础上的预测模型，它起源于马科维茨 (Markowitz, 1952) 提出的现代投资组合理论(Modern Portfolio Theory, MPT) 。在这一理论的基础上，夏普(W. Sharpe，1964)，林特纳(J. Lintner, 1965)和莫辛(J. Mossin, 1966)等经济学家通过假设投资者均采用马科维茨模型进行投资行为从而达到市场均衡，推导出单个资产或资产组合的预期收益率公式如下：</p>
+<p><strong>𝐸(𝑅𝑝 ) = 𝑅𝑓 + 𝛽𝑝 (𝑅𝑚 − 𝑅𝑓 )</strong></p>
+<p>贝塔是CAPM 模型中的一个重要概念。贝塔是一项资产或投资组合对市场投资组合方差的贡献程度，也即该资产或组合相对于市场波动性的敏感程度。贝塔越高，表明该资产或组合受市场波动的影响越大，从而带来更大的风险溢价（即𝛽𝑝 (𝑅𝑚 − 𝑅𝑓)，括号内的部分为市场风险溢价）。在市场上涨（或下跌）时，高贝塔的资产由于承担了更多的市场风险，其收益的变动会比低贝塔的资产更为剧烈。</p>
+<p>在资本资产定价模型的收益率公式中，如果贝塔是固定的，那资本的收益率主要取决于市场的收益率，所以市场上涨高贝塔行业涨幅更大，市场下跌同样高贝塔行业会下跌更多。借助于这一点，可以尝试逆向推断市场的涨跌，当行业涨幅与其贝塔状态基本一致的时候，说明市场是上涨的，相反的时候说明市场是下跌的。</p>
+<h2 id="2策略简介">2.策略简介<a href="#2策略简介" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>利用行业的贝塔与其收益率之间的关系构建择时模型，由于贝塔代表行业相比于市场组合的风险承担，本质上也代表行业相对于市场组合的杠杆率，一定程度上度量了风险，所以将择时模型起名为风险收益一致性择时模型。</p>
+<p>如前所述，资产的贝塔大小与资产收益变动幅度存在相关性，而各个行业具有特征明显且相对稳定的贝塔。基于这一性质，我们可以对行业的贝塔与收益进行观测，进而对判断市场的运行状况：</p>
+<ol>
+<li>当贝塔与收益趋于一致，即高贝塔的行业收益更高时，认为市场表现良好，观点看多；</li>
+<li>当贝塔与收益呈反向关系，即高贝塔的行业收益更低时，认为市场表现不佳，观点看空。这一策略有着清晰的逻辑，并且以行业与市场指数做比较，在长期看较为稳定，适合对市场进行长期判断。为了度量行业贝塔与收益的一致性，我们引入Spearman 秩相关系数
+作为工具。</li>
+</ol>
+<p><strong>Spearman 秩相关系数</strong>是非参数统计方法中常用的一种相关性统计量。它衡量的是两组变量之间的等级（秩）相关程度。其计算方法如下：对需要研究的两组变量 (𝑋, 𝑌) 中的数据 (𝑥 𝑖 , 𝑦𝑖 ) 按由大到小进行排序，记排序后的位置（秩次）为 𝑥′𝑖 , 𝑦′𝑖 ，则观测 𝑖 的秩次差为 𝑑𝑖 = 𝑥′𝑖 − 𝑦′𝑖 。Spearman 秩相关系数为：</p>
+<p><strong>𝜌𝑠 = 1 −6 Σ 𝑑𝑖2/𝑛(𝑛2 − 1)</strong></p>
+<p>𝜌𝑠 的取值为[−1, 1]。秩相关系数的绝对值越大，表明正／负相关性越强。相比另一种常用方法 Kendall 秩相关系数，Spearman 的优点在于计算出的系数差异更明显，避免了每期系数差距过小，造成参数过于敏感，不利于进行判断。下图是行业的贝塔值与万得全A周收益率的Spearman 相关系数，随着市场的变化衡量了市场的一致性变动。我们利用行业的贝塔、收益率与Spearman 秩相关系数，尝试建立择时策略。</p>
+<p>以每周5 个交易日，每月4 个交易周为假设，我们以万得全A 为市场指数，分别计算中信一级行业指数的29 个行业两年左右（96~104 周）的贝塔，在每周末得到贝塔数据 𝛽𝑡 =[𝛽𝑡,𝑖1 𝛽𝑡,𝑖2 … 𝛽𝑡,𝑖29 ]。</p>
+<p>得到贝塔后，我们对29 个行业每周的收益率 𝑟𝑡 = [𝑟𝑡 ,𝑖1 𝑟𝑡 ,𝑖2 ⋯ 𝑟𝑡 ,𝑖29 ] 和贝塔计算Spearman 秩相关系数 𝜌𝑠,𝑡 。在计算时，我们假设行业贝塔在周中保持静态不变，采用29个行业当周的收益率 𝑟𝑡 与上周的贝塔 𝛽𝑡−1 进行计算。这样的好处是贝塔中并没有包含本周的收益率信息，两者保持一定意义上的相对独立，防止某个异常值带来的贝塔偏离。为了过滤相关系数中的噪音，得到更稳定的长周期择时信号，我们对秩相关系数取4 周的滑动平均，得到滑动平均序列 𝜌̅𝑠。</p>
+<p>通过对样本内的计算与优化，选取98 周数据计算贝塔，秩相关系数选取0.128 作为阈值，当 𝜌̅𝑠 ≥ 0.128时，记作一次看多，当𝜌̅𝑠 ≤ −0.128时，记作一次看空。在连续两次观测到同向信号时，正式看多／看空指数，发生看多/看空指令；当观测到反向信号时，清空之前
+观测，以最近一次观测的方向为基准。</p>
+<h2 id="3代码实现python">3.代码实现（Python）<a href="#3代码实现python" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>时间序列数据预处理，用到的数据包括中信行业指数、Wind全A指数，沪深300指数，并将其按照时间序列整体合并存储为ndarray对象</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">zhongxin</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;中信行业指数一级行业(日).xlsx&#39;</span><span class="p">)</span>
+<span class="n">zhongxindate</span> <span class="o">=</span> <span class="n">zhongxin</span><span class="p">[</span><span class="s1">&#39;时间&#39;</span><span class="p">]</span>
+<span class="n">zhongxinarray</span> <span class="o">=</span> <span class="n">zhongxin</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:,</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+<span class="n">windweek</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;WindA.xlsx&#39;</span><span class="p">)</span>
+<span class="n">weekarray</span> <span class="o">=</span> <span class="n">windweek</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:,</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">weekdate</span> <span class="o">=</span> <span class="n">windweek</span><span class="p">[</span><span class="s1">&#39;日期&#39;</span><span class="p">]</span>
+
+<span class="n">hsweek</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;hs300.xlsx&#39;</span><span class="p">)</span>
+<span class="n">hsarray</span> <span class="o">=</span> <span class="n">hsweek</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:,</span><span class="mi">3</span><span class="p">:]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">hsdate</span> <span class="o">=</span> <span class="n">hsweek</span><span class="p">[</span><span class="s1">&#39;日期&#39;</span><span class="p">]</span>
+
+<span class="n">ptr0</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">ptr1</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">ptr2</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">datelist</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">ptr0list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">ptr1list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">ptr2list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ptr0</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">weekdate</span><span class="p">)):</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">hsdate</span><span class="p">[</span><span class="n">ptr1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">weekdate</span><span class="p">[</span><span class="n">ptr0</span><span class="p">]):</span>
+        <span class="n">ptr1</span> <span class="o">=</span> <span class="n">ptr1</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">zhongxindate</span><span class="p">[</span><span class="n">ptr2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">weekdate</span><span class="p">[</span><span class="n">ptr0</span><span class="p">]):</span>
+        <span class="n">ptr2</span> <span class="o">=</span> <span class="n">ptr2</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">hsdate</span><span class="p">[</span><span class="n">ptr1</span><span class="p">]</span> <span class="o">==</span> <span class="n">weekdate</span><span class="p">[</span><span class="n">ptr0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">zhongxindate</span><span class="p">[</span><span class="n">ptr2</span><span class="p">]</span> <span class="o">==</span> <span class="n">weekdate</span><span class="p">[</span><span class="n">ptr0</span><span class="p">]:</span>
+        <span class="n">datelist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hsdate</span><span class="p">[</span><span class="n">ptr1</span><span class="p">])</span>
+        <span class="n">ptr0list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">weekarray</span><span class="p">[</span><span class="n">ptr0</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+        <span class="n">ptr1list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hsarray</span><span class="p">[</span><span class="n">ptr1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+        <span class="n">ptr2list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">zhongxinarray</span><span class="p">[</span><span class="n">ptr2</span><span class="p">,</span> <span class="p">:])</span>
+        
+        
+        
+<span class="n">all_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">datelist</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ptr0list</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ptr1list</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">ptr2list</span><span class="p">)))</span>
+<span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&#34;all_data.npy&#34;</span><span class="p">,</span><span class="n">all_data</span><span class="p">)</span>
+        
+</code></pre></div><p>计算各行业贝塔值</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">all_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&#34;./all_data.npy&#34;</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">dates</span> <span class="o">=</span> <span class="n">all_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># 日期</span>
+<span class="n">wind</span> <span class="o">=</span> <span class="n">all_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># 万德全A</span>
+<span class="n">hs300</span> <span class="o">=</span> <span class="n">all_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>  <span class="c1"># 沪深300</span>
+<span class="n">citic</span> <span class="o">=</span> <span class="n">all_data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:]</span>  <span class="c1"># 中信行情</span>
+
+<span class="c1"># 2005-2021年数据 2005-2016年是样本内数据 16-21年是样本外数据</span>
+<span class="n">N_beta</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="c1"># idx 0-200 2008-2012; idx 500-700 2017-2021</span>
+<span class="n">idx_start</span> <span class="o">=</span> <span class="mi">358</span>
+<span class="n">idx_end</span> <span class="o">=</span> <span class="mi">800</span> 
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">hs300</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">citic</span><span class="o">/</span><span class="mf">100.0</span><span class="p">))</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="c1"># beta</span>
+<span class="n">beta_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">N_beta</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">beta_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">N_beta</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">T</span><span class="p">)[</span><span class="mi">0</span><span class="p">,:])</span>
+    <span class="c1"># beta = np.diag(np.cov(data[i:i+N_beta, :].T))</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">/</span> <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">beta_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">beta</span>
+</code></pre></div><p>计算spearman秩相关系数</p>
+<pre tabindex="0"><code># spearman
+ret_mat = data[N_beta-1:, :]
+spearman = []
+for i in range(beta_mat.shape[0]):
+    spearman.append(stats.spearmanr(ret_mat[i+1, 1:] / ret_mat[i, 1:] - 1, beta_mat[i, :])[0])
+</code></pre><p>接下来进行回测，2005-2016作为样本内数据，2016-2021作为样本外数据，下面进行样本内外数据的回测（纯多策略和多空策略）</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">N_beta</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="c1"># idx 0-200 2008-2012; idx 500-700 2017-2021</span>
+<span class="n">idx_start</span> <span class="o">=</span> <span class="mi">358</span>
+<span class="n">idx_end</span> <span class="o">=</span> <span class="mi">800</span> 
+<span class="c1"># 从 N_beta 开始可以购买</span>
+<span class="n">dates</span> <span class="o">=</span> <span class="n">dates</span><span class="p">[</span><span class="n">N_beta</span><span class="p">:]</span>
+<span class="n">hs300</span> <span class="o">=</span> <span class="n">hs300</span><span class="p">[</span><span class="n">N_beta</span><span class="p">:]</span>
+<span class="n">wind</span> <span class="o">=</span> <span class="n">wind</span><span class="p">[</span><span class="n">N_beta</span><span class="p">:]</span>
+
+<span class="c1"># 分样本内和样本外,start end 之间</span>
+<span class="n">dates</span> <span class="o">=</span> <span class="n">dates</span><span class="p">[</span><span class="n">idx_start</span><span class="p">:</span><span class="n">idx_end</span><span class="p">]</span>
+<span class="n">hs300</span> <span class="o">=</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx_start</span><span class="p">:</span><span class="n">idx_end</span><span class="p">]</span>
+<span class="n">wind</span> <span class="o">=</span> <span class="n">wind</span><span class="p">[</span><span class="n">idx_start</span><span class="p">:</span><span class="n">idx_end</span><span class="p">]</span>
+<span class="n">spearman</span> <span class="o">=</span> <span class="n">spearman</span><span class="p">[</span><span class="n">idx_start</span><span class="p">:</span><span class="n">idx_end</span><span class="p">]</span>
+
+<span class="c1">#以纯多策略进行回测，看多点买入，看空点平仓</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">forward_chunduo</span> <span class="k">as</span> <span class="n">forward</span>
+
+<span class="n">cur_res</span> <span class="o">=</span> <span class="n">forward</span><span class="p">(</span><span class="n">hs300</span><span class="p">,</span> <span class="n">spearman</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.177</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;最终金额&#39;</span><span class="p">,</span> <span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;money_finale&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;时间&#39;</span><span class="p">,</span> <span class="n">dates</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;回报率&#39;</span><span class="p">,</span> <span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;Rp&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;夏普比率&#39;</span><span class="p">,</span> <span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;sharp&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;年华波动率&#39;</span><span class="p">,</span><span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;flow&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;交易次数&#39;</span><span class="p">,</span><span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;add_times&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;sub_times&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;win&#39;</span><span class="p">,</span><span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;add_times&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;loss&#39;</span><span class="p">,</span><span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;sub_times&#39;</span><span class="p">])</span>
+
+<span class="c1">#以多空策略进行回测，看多点先平空单再买入，看空点先平多单再买入</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">forward_duokong</span> <span class="k">as</span> <span class="n">forward</span>
+
+<span class="n">cur_res</span> <span class="o">=</span> <span class="n">forward</span><span class="p">(</span><span class="n">hs300</span><span class="p">,</span> <span class="n">spearman</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.177</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;最终金额&#39;</span><span class="p">,</span> <span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;money_finale&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;时间&#39;</span><span class="p">,</span> <span class="n">dates</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;回报率&#39;</span><span class="p">,</span> <span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;Rp&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;夏普比率&#39;</span><span class="p">,</span> <span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;sharp&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;年华波动率&#39;</span><span class="p">,</span><span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;flow&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;交易次数&#39;</span><span class="p">,</span><span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;add_times&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;sub_times&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;win&#39;</span><span class="p">,</span><span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;add_times&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;loss&#39;</span><span class="p">,</span><span class="n">cur_res</span><span class="p">[</span><span class="s1">&#39;sub_times&#39;</span><span class="p">])</span>
+
+</code></pre></div><p>回测函数utils.py（纯多与多空策略）</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="s1">&#39;&#39;&#39;纯多策略&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">forward_chunduo</span><span class="p">(</span><span class="n">hs300</span><span class="p">,</span> <span class="n">spearman</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">change_state</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">weeknum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">idx0</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">idx1</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">money</span> <span class="o">=</span> <span class="mi">1000000</span>
+    <span class="n">idxs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">add_times</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">sub_times</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">record_money</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">record</span> <span class="o">=</span> <span class="p">[</span><span class="n">money</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">spearman</span><span class="p">)):</span>
+        <span class="n">record_money</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">money</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">spearman</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">:</span>
+                <span class="n">idx0</span> <span class="o">=</span> <span class="n">i</span> <span class="c1">#记录买点</span>
+                <span class="n">change_state</span><span class="o">=</span><span class="mi">1</span> <span class="c1">#改变仓位信号</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="n">money</span><span class="o">//</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">])</span><span class="o">*</span><span class="mi">100</span> <span class="c1">#记录买卖股数</span>
+                <span class="n">cost</span> <span class="o">=</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">]</span><span class="o">*</span><span class="n">num</span> <span class="c1">#记录买入金额</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">spearman</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">idx1</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">profit</span> <span class="o">=</span> <span class="n">hs300</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">num</span> <span class="c1">#记录卖出金额</span>
+                <span class="n">money</span> <span class="o">=</span> <span class="n">money</span><span class="o">-</span><span class="n">cost</span><span class="o">+</span><span class="n">profit</span> <span class="c1">#记录当前金额</span>
+                <span class="n">money_last</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">record</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">money</span><span class="p">)</span>
+                <span class="n">idxs</span><span class="o">.</span><span class="n">append</span><span class="p">([[</span><span class="n">idx0</span><span class="p">,</span><span class="n">i</span><span class="p">],</span> <span class="p">[</span><span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">],</span><span class="n">hs300</span><span class="p">[</span><span class="n">i</span><span class="p">]],[</span><span class="n">num</span><span class="p">],[</span><span class="n">money</span><span class="p">],[(</span><span class="n">money</span><span class="o">/</span><span class="n">money_last</span><span class="p">)</span><span class="o">-</span> <span class="mi">1</span><span class="p">]])</span> <span class="c1">#记录交易信息（买卖时间，买入价格，卖出价格,交易了多少股）</span>
+                <span class="k">if</span> <span class="n">hs300</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">]:</span>
+                    <span class="n">add_times</span> <span class="o">=</span> <span class="n">add_times</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">sub_times</span> <span class="o">=</span> <span class="n">sub_times</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">change_state</span><span class="o">=</span><span class="mi">1</span>
+            <span class="k">if</span> <span class="n">spearman</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">threshold</span><span class="p">:</span>
+                <span class="n">idx1</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">profit</span> <span class="o">=</span> <span class="n">hs300</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">num</span> <span class="c1">#记录卖出金额</span>
+                <span class="n">money</span> <span class="o">=</span> <span class="n">money</span><span class="o">-</span><span class="n">cost</span><span class="o">+</span><span class="n">profit</span> <span class="c1">#记录当前金额</span>
+                <span class="n">money_last</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">record</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">money</span><span class="p">)</span>
+                <span class="n">idxs</span><span class="o">.</span><span class="n">append</span><span class="p">([[</span><span class="n">idx0</span><span class="p">,</span><span class="n">i</span><span class="p">],</span> <span class="p">[</span><span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">],</span><span class="n">hs300</span><span class="p">[</span><span class="n">i</span><span class="p">]],[</span><span class="n">num</span><span class="p">],[</span><span class="n">money</span><span class="p">],[(</span><span class="n">money</span><span class="o">/</span><span class="n">money_last</span><span class="p">)</span><span class="o">-</span> <span class="mi">1</span><span class="p">]])</span> <span class="c1">#记录交易信息（买卖时间，买入价格，卖出价格,交易了多少股）</span>
+
+                <span class="k">if</span> <span class="n">hs300</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">]:</span>
+                    <span class="n">add_times</span> <span class="o">=</span> <span class="n">add_times</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">sub_times</span> <span class="o">=</span> <span class="n">sub_times</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">change_state</span><span class="o">=</span><span class="mi">1</span>
+            <span class="n">weeknum</span> <span class="o">=</span> <span class="n">weeknum</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">change_state</span><span class="p">:</span>
+            <span class="n">change_state</span><span class="o">=</span><span class="mi">0</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="o">-</span><span class="n">state</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+    <span class="n">money_finale</span> <span class="o">=</span> <span class="n">money</span>  <span class="c1"># 最终金额</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;money_finale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">money_finale</span>
+
+    <span class="n">Rp</span> <span class="o">=</span> <span class="p">(</span><span class="n">money_finale</span> <span class="o">/</span> <span class="mi">1000000</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">spearman</span><span class="p">)</span><span class="o">/</span><span class="mi">52</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;Rp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Rp</span>  <span class="c1"># 年化收益率</span>
+
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">ratio</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">record_money</span><span class="p">)</span> <span class="o">//</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">ratio</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record_money</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">k</span><span class="o">+</span><span class="n">k</span><span class="p">]</span> <span class="o">/</span> <span class="n">record_money</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">k</span><span class="p">])</span>
+    <span class="n">flow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">12</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># 年化波动率</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;flow&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow</span>
+
+    <span class="n">sharp</span> <span class="o">=</span> <span class="n">Rp</span> <span class="o">/</span> <span class="n">flow</span>  <span class="c1"># 夏普比率</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;sharp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sharp</span>
+
+    <span class="c1"># res[&#39;record&#39;] = record</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;record_money&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">record_money</span>
+
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;add_times&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_times</span>
+
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;sub_times&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_times</span>
+
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;record_idxs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idxs</span>
+    <span class="k">return</span> <span class="n">res</span> 
+
+
+<span class="s1">&#39;&#39;&#39;多空策略_hs300&#39;&#39;&#39;</span>
+
+<span class="k">def</span> <span class="nf">forward_duokong</span><span class="p">(</span><span class="n">hs300</span><span class="p">,</span> <span class="n">spearman</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+
+    <span class="c1"># 模拟购买</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 0代表空仓，1代表有多单未平，-1代表有空单未平</span>
+    <span class="n">change_state</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">idx0</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">idx1</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">money</span> <span class="o">=</span> <span class="mi">1000000</span>
+
+    <span class="n">add_times</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">sub_times</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">record</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">record_money</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">num_duo</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">num_kong</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">spearman</span><span class="p">)):</span>
+        <span class="n">record_money</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">money</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">spearman</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">:</span>  <span class="c1"># 看多信号</span>
+            <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 如果 有空单未平或者空仓</span>
+                <span class="n">idx0</span> <span class="o">=</span> <span class="n">i</span>  <span class="c1"># 记录买点</span>
+                <span class="n">change_state</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 改变仓位信号</span>
+                <span class="k">if</span> <span class="n">num_kong</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">num_duo</span> <span class="o">=</span> <span class="n">money</span> <span class="o">//</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span>  <span class="c1"># 记录买卖股数</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">money</span> <span class="o">=</span> <span class="n">money</span> <span class="o">-</span> <span class="n">num_kong</span> <span class="o">*</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">]</span> <span class="o">+</span> <span class="n">num_kong</span> <span class="o">*</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx1</span><span class="p">]</span>  <span class="c1"># 平空单后的金额</span>
+                    <span class="k">if</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx1</span><span class="p">]:</span>
+                        <span class="n">record</span><span class="o">.</span><span class="n">append</span><span class="p">([[</span><span class="n">money</span><span class="p">],</span> <span class="p">[</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx0</span><span class="p">],</span> <span class="p">[</span><span class="n">hs300</span><span class="p">[</span><span class="n">idx1</span><span class="p">],</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">]],</span> <span class="p">[</span><span class="s1">&#39;平空胜，做多&#39;</span><span class="p">]])</span>
+                        <span class="n">add_times</span> <span class="o">=</span> <span class="n">add_times</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">record</span><span class="o">.</span><span class="n">append</span><span class="p">([[</span><span class="n">money</span><span class="p">],</span> <span class="p">[</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx0</span><span class="p">],</span> <span class="p">[</span><span class="n">hs300</span><span class="p">[</span><span class="n">idx1</span><span class="p">],</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">]],</span> <span class="p">[</span><span class="s1">&#39;平空负，做多&#39;</span><span class="p">]])</span>
+                        <span class="n">sub_times</span> <span class="o">=</span> <span class="n">sub_times</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="n">num_kong</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">num_duo</span> <span class="o">=</span> <span class="n">money</span> <span class="o">//</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span>  <span class="c1"># 看多买入股数</span>
+
+                <span class="k">if</span> <span class="n">change_state</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 改变信号 且空仓  改为多单信号</span>
+                    <span class="n">change_state</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">change_state</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 改变信号 且空仓  改为空单信号</span>
+                    <span class="n">change_state</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">change_state</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 改变信号 多变空 空变多</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="o">-</span><span class="n">state</span>
+
+        <span class="k">if</span> <span class="n">spearman</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">threshold</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 如果有多单未平或空仓</span>
+                <span class="n">idx1</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">change_state</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># 改变仓位信号</span>
+                <span class="k">if</span> <span class="n">num_duo</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">num_kong</span> <span class="o">=</span> <span class="n">money</span> <span class="o">//</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx1</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span>  <span class="c1"># 记录买卖股数</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">money</span> <span class="o">=</span> <span class="n">money</span> <span class="o">+</span> <span class="n">num_duo</span> <span class="o">*</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx1</span><span class="p">]</span> <span class="o">-</span> <span class="n">num_duo</span> <span class="o">*</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">]</span>  <span class="c1"># 平多单后的金额</span>
+                    <span class="k">if</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx1</span><span class="p">]:</span>
+                        <span class="n">record</span><span class="o">.</span><span class="n">append</span><span class="p">([[</span><span class="n">money</span><span class="p">],</span> <span class="p">[</span><span class="n">idx0</span><span class="p">,</span> <span class="n">idx1</span><span class="p">],</span> <span class="p">[</span><span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">],</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx1</span><span class="p">]],</span> <span class="p">[</span><span class="s1">&#39;平多胜，做空&#39;</span><span class="p">]])</span>
+                        <span class="n">add_times</span> <span class="o">=</span> <span class="n">add_times</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">record</span><span class="o">.</span><span class="n">append</span><span class="p">([[</span><span class="n">money</span><span class="p">],</span> <span class="p">[</span><span class="n">idx0</span><span class="p">,</span> <span class="n">idx1</span><span class="p">],</span> <span class="p">[</span><span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">],</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx1</span><span class="p">]],</span> <span class="p">[</span><span class="s1">&#39;平多负，做空&#39;</span><span class="p">]])</span>
+                        <span class="n">sub_times</span> <span class="o">=</span> <span class="n">sub_times</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="n">num_duo</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">num_kong</span> <span class="o">=</span> <span class="n">money</span> <span class="o">//</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">hs300</span><span class="p">[</span><span class="n">idx0</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span>  <span class="c1"># 看空借入股数</span>
+
+                <span class="k">if</span> <span class="n">change_state</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 改变信号 且空仓  改为多单信号</span>
+                    <span class="n">change_state</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">change_state</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># 改变信号 且空仓  改为空单信号</span>
+                    <span class="n">change_state</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">change_state</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 改变信号 多变空 空变多</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="o">-</span><span class="n">state</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">spearman</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">money</span> <span class="o">=</span> <span class="n">money</span> <span class="o">+</span> <span class="n">hs300</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_duo</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">money</span> <span class="o">=</span> <span class="n">money</span> <span class="o">+</span> <span class="n">hs300</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_kong</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="n">money_finale</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 最终金额</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;money_finale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">money_finale</span>
+
+    <span class="n">Rp</span> <span class="o">=</span> <span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1000000</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">spearman</span><span class="p">)</span><span class="o">/</span><span class="mi">52</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;Rp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Rp</span>  <span class="c1"># 年化收益率</span>
+
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">ratio</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">record_money</span><span class="p">)</span> <span class="o">//</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">ratio</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record_money</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">k</span><span class="o">+</span><span class="n">k</span><span class="p">]</span> <span class="o">/</span> <span class="n">record_money</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">k</span><span class="p">])</span>
+    <span class="n">flow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">12</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># 年化波动率</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;flow&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow</span>
+
+    <span class="n">sharp</span> <span class="o">=</span> <span class="n">Rp</span> <span class="o">/</span> <span class="n">flow</span>  <span class="c1"># 夏普比率</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;sharp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sharp</span>
+
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;record&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">record</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;record_money&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">record_money</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;add_times&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_times</span>
+
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;sub_times&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_times</span>
+
+    <span class="k">return</span> <span class="n">res</span>
+</code></pre></div><p>其他的结果包括一些表格、图片、数据与结论可以在Github地址中查看(Project Report)。</p>
+
+			</div>
+
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://2318454078.github.io/tags/study">Study</a></span><span class="tag"><a href="https://2318454078.github.io/tags/python">Python</a></span><span class="tag"><a href="https://2318454078.github.io/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93">量化交易</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>4360字 阅读约 9分钟</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2022-01-22 14:39 &#43;0800</p>
+			</footer>
+		</article>
+		<aside id="toc">
+			<div class="toc-title"></div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1模型介绍">1.模型介绍</a></li>
+    <li><a href="#2策略简介">2.策略简介</a></li>
+    <li><a href="#3代码实现python">3.代码实现（Python）</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="next-post" href="https://2318454078.github.io/posts/project_insuracex/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;</span><br><span>基于区块链、OCR、NLP技术的智能保险合同平台</span>
+			</a>
+			<a class="prev-post" href="https://2318454078.github.io/posts/guide_git/">
+				<span class="post-nav-label">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>博客搭建与部署指南</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2022 <a href="https://2318454078.github.io/">HYJ</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://2318454078.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+	<script type="text/javascript"
+	src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+
+	<script src="https://2318454078.github.io/js/bundle.min.7d8545daa55d62427355498dd8da13f98ff79a7938ce7d2a5e2ae1ec0de3beb8.js" integrity="sha256-fYVF2qVdYkJzVUmN2NoT+Y/3mnk4zn0qXirh7A3jvrg=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

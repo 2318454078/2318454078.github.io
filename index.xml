@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HYJ BLOG</title>
+    <link>https://2318454078.github.io/</link>
+    <description>Recent content on HYJ BLOG</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>HYJ@copyright</copyright>
+    <lastBuildDate>Sun, 23 Jan 2022 18:08:33 +0800</lastBuildDate><atom:link href="https://2318454078.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>&lt;金融数据分析学习笔记01&gt;概率论、统计学与资产回报率</title>
+      <link>https://2318454078.github.io/posts/study_statistics/</link>
+      <pubDate>Sun, 23 Jan 2022 18:08:33 +0800</pubDate>
+      
+      <guid>https://2318454078.github.io/posts/study_statistics/</guid>
+      <description>CUHK FTEC5580 金融数据分析 1.概率论 $$\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt,.$$</description>
+    </item>
+    
+    <item>
+      <title>基于区块链、OCR、NLP技术的智能保险合同平台</title>
+      <link>https://2318454078.github.io/posts/project_insuracex/</link>
+      <pubDate>Sat, 22 Jan 2022 22:20:36 +0800</pubDate>
+      
+      <guid>https://2318454078.github.io/posts/project_insuracex/</guid>
+      <description>CUHK 高级金融基础设施_课程项目 项目代码与数据：GitHub地址 项目文档：[Group Project.pdf](https://github.com/2318454078/Insurance_Blockchain_OCR_GPT2/blob/main/Project Report.pdf) 1.项目架构（Dash） Dash是Python下的一个</description>
+    </item>
+    
+    <item>
+      <title>基于CAPM的风险收益一致性择时模型（Python实现）</title>
+      <link>https://2318454078.github.io/posts/project_capmtimeselection/</link>
+      <pubDate>Sat, 22 Jan 2022 14:39:24 +0800</pubDate>
+      
+      <guid>https://2318454078.github.io/posts/project_capmtimeselection/</guid>
+      <description>CUHK 金融市场与机构_课程项目 本文模型复现来源于华泰金工风险收益一致性择时模型研究报告 项目代码与数据：GitHub地址 项目文档：Group Project.pdf 1.</description>
+    </item>
+    
+    <item>
+      <title>博客搭建与部署指南</title>
+      <link>https://2318454078.github.io/posts/guide_git/</link>
+      <pubDate>Sat, 22 Jan 2022 13:44:37 +0800</pubDate>
+      
+      <guid>https://2318454078.github.io/posts/guide_git/</guid>
+      <description>1.博客搭建 下载Hugo: Releases · gohugoio/hugo (github.com) 解压到 D:\Hugo\bin 目录下，并设置好环境变量 打开命令行验证是否安装完成 hugo version 选择一个目录新建网站站点 cd github hugo new site myblog 在官方网</description>
+    </item>
+    
+    <item>
+      <title>欢迎来到HYJ的BLOG</title>
+      <link>https://2318454078.github.io/about-hugo/</link>
+      <pubDate>Sat, 22 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://2318454078.github.io/about-hugo/</guid>
+      <description>我将会在这里记录我的生活与学习的经历 希望自己能够坚持下去 每天都更好 石萌最美 ❤️❤️😘 Github:https://github.com/2318454078</description>
+    </item>
+    
+  </channel>
+</rss>

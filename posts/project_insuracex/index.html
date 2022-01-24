@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="基于区块链、OCR、NLP技术的智能保险合同平台">
+<meta itemprop="description" content="CUHK 高级金融基础设施_课程项目 项目代码与数据：GitHub地址 项目文档：[Group Project.pdf](https://github.com/2318454078/Insurance_Blockchain_OCR_GPT2/blob/main/Project Report.pdf) 1.项目架构（Dash） Dash是Python下的一个"><meta itemprop="datePublished" content="2022-01-22T22:20:36+08:00" />
+<meta itemprop="dateModified" content="2022-01-22T22:20:36+08:00" />
+<meta itemprop="wordCount" content="4097"><meta itemprop="image" content="https://picsum.photos/1024/768/?random">
+<meta itemprop="keywords" content="python,OCR,NLP,Blockchain,学习," /><meta property="og:title" content="基于区块链、OCR、NLP技术的智能保险合同平台" />
+<meta property="og:description" content="CUHK 高级金融基础设施_课程项目 项目代码与数据：GitHub地址 项目文档：[Group Project.pdf](https://github.com/2318454078/Insurance_Blockchain_OCR_GPT2/blob/main/Project Report.pdf) 1.项目架构（Dash） Dash是Python下的一个" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://2318454078.github.io/posts/project_insuracex/" /><meta property="og:image" content="https://picsum.photos/1024/768/?random" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-22T22:20:36+08:00" />
+<meta property="article:modified_time" content="2022-01-22T22:20:36+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://picsum.photos/1024/768/?random"/>
+
+<meta name="twitter:title" content="基于区块链、OCR、NLP技术的智能保险合同平台"/>
+<meta name="twitter:description" content="CUHK 高级金融基础设施_课程项目 项目代码与数据：GitHub地址 项目文档：[Group Project.pdf](https://github.com/2318454078/Insurance_Blockchain_OCR_GPT2/blob/main/Project Report.pdf) 1.项目架构（Dash） Dash是Python下的一个"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>基于区块链、OCR、NLP技术的智能保险合同平台</title>
+	<link rel="stylesheet" href="https://2318454078.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	<style>.bg-img {background-image: url('https://picsum.photos/1024/768/?random');}</style>
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://2318454078.github.io/">HYJ BLOG</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://2318454078.github.io/posts/">Posts</a>
+				<a href="https://2318454078.github.io/about-hugo/">About</a>
+				<a href="https://2318454078.github.io/tags/">Tags</a>
+				<a href="https://2318454078.github.io/categories/">Categories</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="img-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></button><button id="toc-btn" class="hdr-btn desktop-only-ib" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://twitter.com/" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://instagram.com/" target="_blank" rel="noopener me" title="Instagram"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line></svg></a><a href="https://github.com/" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://2318454078.github.io/posts/">Posts</a></li>
+			<li><a href="https://2318454078.github.io/about-hugo/">About</a></li>
+			<li><a href="https://2318454078.github.io/tags/">Tags</a></li>
+			<li><a href="https://2318454078.github.io/categories/">Categories</a></li>
+		</ul>
+	</div>
+
+
+	<div class="bg-img"></div>
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Jan 22, 2022</span></div>
+				<h1>基于区块链、OCR、NLP技术的智能保险合同平台</h1>
+			</header>
+			<div class="content">
+				<p>CUHK 高级金融基础设施_课程项目</p>
+<p>项目代码与数据：<a href="https://github.com/2318454078/Insurance_Blockchain_OCR_GPT2">GitHub地址</a></p>
+<p>项目文档：[Group Project.pdf](<a href="https://github.com/2318454078/Insurance_Blockchain_OCR_GPT2/blob/main/Project">https://github.com/2318454078/Insurance_Blockchain_OCR_GPT2/blob/main/Project</a> Report.pdf)</p>
+<h2 id="1项目架构dash">1.项目架构（Dash）<a href="#1项目架构dash" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>Dash是Python下的一个第三方框架，主要用于将数据分析、机器学习类的项目构建为Web项目。</p>
+<p>Dash写在Plotly.js和React.js之上，是构建和部署具有定制用户界面的数据应用程序的理想选择。它特别适合于任何与数据打交道的人。</p>
+<p>通过几个简单的模式，Dash抽象出了建立具有交互式数据可视化的全栈网络应用程序所需的所有技术和协议。</p>
+<p>Dash非常简单，你可以在10分钟内将用户界面与你的代码绑定。</p>
+<p>Dash应用程序在Web浏览器中呈现。你可以将你的应用程序部署到虚拟机或Kubernetes集群中，然后通过URL分享它们。由于Dash应用程序是在Web浏览器中查看的，因此Dash本身就是跨平台和移动的。</p>
+<p>Dash官方文档:<a href="https://dash.plotly.com/">Dash Documentation &amp; User Guide | Plotly</a></p>
+<h2 id="2区块链模块功能解析与代码实现">2.区块链模块功能解析与代码实现<a href="#2区块链模块功能解析与代码实现" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<h4 id="什么是区块链">什么是区块链？<a href="#什么是区块链" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
+<p>比特币（区块链）白皮书：<a href="https://bitcoin.org/files/bitcoin-paper/bitcoin_zh_cn.pdf">bitcoin_zh_cn.pdf</a></p>
+<p>区块链，就是由一组包含信息的区块组成的链条。每一个区块大致包含以下三个内容：该区块的哈希值（可以理解成一个区块的&quot;指纹&quot;），上一个区块的哈希值，以及这一个区块里所存储的数据。学过数据结构的同学可能会感觉这和链表非常相似——没错，我一开始也是这么理解的。与链表不同的是，区块的哈希值是在该区块<strong>创建</strong>时，根据这个区块存储的数据信息和上一区块的哈希值一起作为输入生成的。这样一来区块链和链表不同的地方就体现出来了：在区块链里如果任何一个中间区块（block_K）的信息发生了改变，block_K就不再是之前的block_K了（哈希值改变了），又因为下一区块会存储前一区块的哈希值，链中任意区块的变化都能通过简单的哈希值校验来发现。</p>
+<p>这样一来，如果要修改存储在某个区块链里的信息，同时确保区块链的完整合理，则需要重新计算该区块后面所有区块的哈希值。因此在区块链中修改的记录都是&quot;有迹可循&quot;的。</p>
+<h4 id="共识机制">共识机制<a href="#共识机制" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
+<p>目前有了区块这种存储结构，拥有这个区块链的本人可以知道区块链里的信息是否有修改，但是如何让别人也能够验证呢？</p>
+<p>为什么会有这样的问题？我们可以拿比特币举个栗子：比特币中区块存储的是账本信息（可以理解成很多转账记录，例如A支付给B 10块钱）。由于没有银行这种第三方机构，也没有实体的货币（如纸币），为了让转账生效，方法之一是让尽可能多的人作为见证者去验证这一转账，当这个转账被大多数人验证真实后，A如果想再用同样的10块钱支付给C以换取东西，并且把这笔交易广播给见证者们，见证者们就会提出这笔转账不合理。A的这类行为即为双重支付，这种通过判定足够数量的用户是否达成共识来验证的机制叫做&quot;共识机制&quot;。</p>
+<p>回到最初的问题：把交易广播出去以后，如何让别人验证转账呢？比特币是这样实现的：让每个人都拥有一份完整的区块链账本，有人想要修改账本时候，其他人只需要验证修改的账本和自己已有的账本是否一致就可以，只要大多数人投反对票，那么这个账本的修改就会被作废了。</p>
+<p>然而即使这样，如果想要篡改记录的攻击者无限制地发送虚假区块给他人验证，也会对整体网络其他帮助验证人（节点）造成资源的浪费。为了解决这一问题，比特币提供的方法是增加区块创建的时间成本、计算成本，这样即使有不怀好意的攻击者，攻击者篡改的成本大大增加，对全网其他的影响也大大减少，这也被称做工作量证明机制（proof of Work）。</p>
+<h4 id="工作量证明机制">工作量证明机制<a href="#工作量证明机制" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
+<p>在比特币中工作量证明是如何实现的呢？</p>
+<p>我们知道，哈希算法类似于将一个简单输入值x，通过一个很复杂的函数（散列函数），计算出哈希值y。</p>
+<p>如果人类给出一个y，让计算机根据函数反推x，计算机只能通过用一个个不同的x暴力尝试出刚好能计算出y的答案。在散列函数中，这对于计算机来说是个不可能完成的任务。所以为了控制难度，可以给计算机一个合适的答案范围，例如要求计算机通过修改区块里的一个随机数nonce，计算出哈希值，这个哈希值必须以'0000&rsquo;开头。如果这个哈希值是16进制，哈希值里的每一位数数值可以看作是随机的，那么改变一次nonce能够刚好凑出'0000&rsquo;开头的概率就是 ,计算机可能要经过千万次的尝试才能刚好得到符合条件的哈希值。答案范围越小，计算机需要尝试的次数就越多，修改区块链需要的开销就越大。</p>
+<p>以下是一个简单的代码实现:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha256</span>
+<span class="c1"># We want the hash value starts with &#39;00000&#39;</span>
+<span class="n">difficulty</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span><span class="o">*</span><span class="n">difficulty</span>
+
+<span class="k">def</span> <span class="nf">compute_hash</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">nonce</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sha256</span><span class="p">((</span><span class="n">data</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">nonce</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;123&#39;</span>
+<span class="n">nonce</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># data to change</span>
+
+<span class="c1"># init hash_value    </span>
+<span class="n">hash_value</span> <span class="o">=</span> <span class="n">compute_hash</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">nonce</span><span class="p">)</span>
+
+<span class="c1"># change nonce recursively until hash_value begins with the answer.</span>
+<span class="k">while</span> <span class="n">hash_value</span><span class="p">[:</span><span class="n">difficulty</span><span class="p">]</span> <span class="o">!=</span> <span class="n">answer</span><span class="p">:</span>
+    <span class="n">nonce</span> <span class="o">+=</span> <span class="mi">1</span> 
+    <span class="n">hash_value</span> <span class="o">=</span> <span class="n">compute_hash</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">nonce</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;tryout times:&#39;</span><span class="p">,</span><span class="n">nonce</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hash_value:&#39;</span><span class="p">,</span><span class="n">hash_value</span><span class="p">)</span>
+</code></pre></div><p>输出：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">tryout</span> <span class="n">times</span><span class="p">:</span> <span class="mi">96064</span>
+<span class="n">hash_value</span><span class="p">:</span> <span class="mi">00000</span><span class="n">bdebc0a945fcd1a1b6127267393dfc299c89b031b7879d926a32921e9f6</span>
+</code></pre></div><p>可以看到，计算机尝试了96064个不同的nonce值才让哈希值的前N位数符合我们的答案。</p>
+<p>在比特币区块链中，产生一个区块平均时间在10分钟左右，同时考虑到全网算力的提升，比特币会通过提高难度（减小答案范围）的方式，让目前一个区块产生的平均时间不会因为算力的提升增长，甚至每隔一段时间比特币的产量会减半。</p>
+<p>有了这些机制的保护，区块链的篡改几乎成了不可能。此外在许多虚拟货币例如比特币中，还加入了区块奖励机制，即第一位把一个新区块加入到主链上用户会收到一定数量的比特币（目前是12.5枚/区块）。这种奖励机制有助于帮助系统内的节点用户保持&quot;诚实&quot;。即便真的有人拥有足够的算力破坏虚拟货币系统，他手上持有的货币也会因为信用崩塌而失去价值，而如果遵守规则，算力用于计算区块获得区块奖励，他将会获得价值更高的奖励收益。</p>
+<h4 id="代码实现简单的区块链加密货币">代码实现简单的区块链（加密货币）<a href="#代码实现简单的区块链加密货币" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
+<p>利用Python实现简单的区块链:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha256</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">import</span> <span class="nn">rsa</span>
+
+
+<span class="c1"># block + chain</span>
+<span class="k">class</span> <span class="nc">Block</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transactions</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">prev_hash</span><span class="p">):</span>
+        <span class="c1"># transaction -&gt; list of objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span> <span class="o">=</span> <span class="n">transactions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prev_hash</span> <span class="o">=</span> <span class="n">prev_hash</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nonce</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># use for mining</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="si">}</span><span class="s2">&#34;</span>
+
+    <span class="k">def</span> <span class="nf">compute_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">block_string</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="si">{}{}{}{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_hash</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nonce</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sha256</span><span class="p">(</span><span class="n">block_string</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">validate_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">transaction</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">transaction</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">mine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">difficulty</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_transaction</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Abnormal transaction found, abort.&#39;</span><span class="p">)</span>
+
+        <span class="n">answer</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span><span class="o">*</span><span class="n">difficulty</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash</span><span class="p">[:</span><span class="n">difficulty</span><span class="p">]</span> <span class="o">!=</span> <span class="n">answer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nonce</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Finished mining, tryout times:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nonce</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Transaction</span><span class="p">(</span><span class="n">Dict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payer</span><span class="p">,</span> <span class="n">payee</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">payer</span><span class="o">=</span><span class="n">payer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">payee</span><span class="o">=</span><span class="n">payee</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="n">amount</span><span class="p">)</span>
+        <span class="c1"># self.timestamp = timestamp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">hash</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">sign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">private_key</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signature</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">sign_hash</span><span class="p">(</span>
+            <span class="n">hash_value</span><span class="o">=</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;hash&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">),</span>
+            <span class="n">priv_key</span><span class="o">=</span><span class="n">private_key</span><span class="p">,</span>
+            <span class="n">hash_method</span><span class="o">=</span><span class="s1">&#39;SHA-256&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;payer&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 这里由于没有引入数字签名，暂不验证</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">compute_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Transaction_string</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="si">{}{}{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;payer&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;payee&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">sha256</span><span class="p">(</span><span class="n">Transaction_string</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">BlockChain</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">difficulty</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chain</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">create_genesis</span><span class="p">()]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactionPool</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Reward</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">difficulty</span> <span class="o">=</span> <span class="n">difficulty</span>
+
+    <span class="k">def</span> <span class="nf">set_difficulty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">difficulty</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">difficulty</span> <span class="o">=</span> <span class="n">difficulty</span>
+
+    <span class="k">def</span> <span class="nf">create_genesis</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Block</span><span class="p">:</span>
+        <span class="n">genesis_block</span> <span class="o">=</span> <span class="n">Block</span><span class="p">(</span><span class="n">transactions</span><span class="o">=</span><span class="p">[],</span> <span class="n">prev_hash</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">genesis_block</span>
+
+    <span class="k">def</span> <span class="nf">get_latest_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">add_block_to_chain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_block</span><span class="p">:</span> <span class="n">Block</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">new_block</span><span class="o">.</span><span class="n">hash</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">difficulty</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">difficulty</span><span class="p">:</span>
+            <span class="n">new_block</span><span class="o">.</span><span class="n">prev_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_latest_block</span><span class="p">()</span><span class="o">.</span><span class="n">hash</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_block</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34; a new block added to blockchain.&#34;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;block validation failed.&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">validate_chain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hash</span>
+
+        <span class="c1"># validate block</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="p">)):</span>
+            <span class="n">block_to_validate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+            <span class="c1"># validate transactions in block</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">block_to_validate</span><span class="o">.</span><span class="n">validate_transaction</span><span class="p">():</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Fraud transactions!&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="c1"># validate data in this block hasn&#39;t been tampered</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">block_to_validate</span><span class="o">.</span><span class="n">hash</span> <span class="o">==</span> <span class="n">block_to_validate</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">():</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;Data has been tampered! </span><span class="se">\n</span><span class="s1"> this hash:</span><span class="si">{</span><span class="n">block_to_validate</span><span class="o">.</span><span class="n">hash</span><span class="si">}</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> computed hash:</span><span class="si">{</span><span class="n">block_to_validate</span><span class="o">.</span><span class="n">compute_hash</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="c1"># validate block.prev_hash == previous block.hash</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">block_to_validate</span><span class="o">.</span><span class="n">prev_hash</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hash</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Chain broke!&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">pass</span>
+</code></pre></div><p>测试区块链：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="c1"># test</span>
+<span class="c1"># 创建区块链，同时生成创始区块</span>
+<span class="n">blockchain</span> <span class="o">=</span> <span class="n">BlockChain</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">transaction1</span> <span class="o">=</span> <span class="n">Transaction</span><span class="p">(</span><span class="n">payer</span><span class="o">=</span><span class="s1">&#39;Paparazzi&#39;</span><span class="p">,</span> <span class="n">payee</span><span class="o">=</span><span class="s1">&#39;Elephant&#39;</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="s1">&#39;666&#39;</span><span class="p">)</span>
+
+<span class="n">transaction2</span> <span class="o">=</span> <span class="n">Transaction</span><span class="p">(</span><span class="n">payer</span><span class="o">=</span><span class="s1">&#39;Elephant&#39;</span><span class="p">,</span> <span class="n">payee</span><span class="o">=</span><span class="s1">&#39;Sylar&#39;</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="s1">&#39;100&#39;</span><span class="p">)</span>
+
+<span class="c1"># add one block to chain</span>
+<span class="n">block1</span> <span class="o">=</span> <span class="n">Block</span><span class="p">(</span>
+    <span class="n">transactions</span><span class="o">=</span><span class="p">[</span><span class="n">transaction1</span><span class="p">],</span>
+    <span class="n">prev_hash</span><span class="o">=</span><span class="n">blockchain</span><span class="o">.</span><span class="n">get_latest_block</span><span class="p">()</span><span class="o">.</span><span class="n">hash</span><span class="p">)</span>
+<span class="n">block1</span><span class="o">.</span><span class="n">mine</span><span class="p">(</span><span class="n">difficulty</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">blockchain</span><span class="o">.</span><span class="n">add_block_to_chain</span><span class="p">(</span><span class="n">block1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;hash of block1: </span><span class="si">{</span><span class="n">block1</span><span class="o">.</span><span class="n">hash</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+
+<span class="c1"># add another block to chain</span>
+<span class="n">block2</span> <span class="o">=</span> <span class="n">Block</span><span class="p">(</span>
+    <span class="n">transactions</span><span class="o">=</span><span class="p">[</span><span class="n">transaction2</span><span class="p">],</span>
+    <span class="n">prev_hash</span><span class="o">=</span><span class="n">blockchain</span><span class="o">.</span><span class="n">get_latest_block</span><span class="p">()</span><span class="o">.</span><span class="n">hash</span><span class="p">)</span>
+<span class="n">block2</span><span class="o">.</span><span class="n">mine</span><span class="p">(</span><span class="n">difficulty</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">blockchain</span><span class="o">.</span><span class="n">add_block_to_chain</span><span class="p">(</span><span class="n">block2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;hash of block2: </span><span class="si">{</span><span class="n">block1</span><span class="o">.</span><span class="n">hash</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+
+<span class="c1"># Output:</span>
+<span class="n">Finished</span> <span class="n">mining</span><span class="p">,</span> <span class="n">tryout</span> <span class="n">times</span><span class="p">:</span><span class="mi">222523</span>
+ <span class="n">a</span> <span class="n">new</span> <span class="n">block</span> <span class="n">added</span> <span class="n">to</span> <span class="n">blockchain</span><span class="o">.</span>
+<span class="nb">hash</span> <span class="n">of</span> <span class="n">block1</span><span class="p">:</span> <span class="mi">0000</span><span class="n">d7f7e1018f498431eefa24faf7ab6b8ec9c42ecf89d1039939f8f74c15d5</span>
+<span class="n">Finished</span> <span class="n">mining</span><span class="p">,</span> <span class="n">tryout</span> <span class="n">times</span><span class="p">:</span><span class="mi">1321891</span>
+ <span class="n">a</span> <span class="n">new</span> <span class="n">block</span> <span class="n">added</span> <span class="n">to</span> <span class="n">blockchain</span><span class="o">.</span>
+<span class="nb">hash</span> <span class="n">of</span> <span class="n">block2</span><span class="p">:</span> <span class="mi">0000018</span><span class="n">c800c81b750dae4785652efc679929177c6fed9b0d268627f038dde1c</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;previous hash of last block:</span><span class="si">{</span><span class="n">blockchain</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">prev_hash</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;hash of second last block:</span><span class="si">{</span><span class="n">blockchain</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">hash</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+
+<span class="c1"># Output:</span>
+<span class="n">previous</span> <span class="nb">hash</span> <span class="n">of</span> <span class="n">last</span> <span class="n">block</span><span class="p">:</span><span class="mi">0000</span><span class="n">c245596fd46a0a8b80e8c2f84efb7f19b077a1a61881260f95dc6098d57a</span>
+<span class="nb">hash</span> <span class="n">of</span> <span class="n">second</span> <span class="n">last</span> <span class="n">block</span><span class="p">:</span><span class="mi">0000</span><span class="n">c245596fd46a0a8b80e8c2f84efb7f19b077a1a61881260f95dc6098d57a</span>
+</code></pre></div><h4 id="基于区块链的医疗诊断与保险购买">基于区块链的医疗诊断与保险购买<a href="#基于区块链的医疗诊断与保险购买" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
+<p>有了上述实现的区块链，我们可以将医生输入的诊断信息会与区块链中前一个区块的哈希值打包在一起，构建一个“交易”，然后通过哈希算法对该区块进行加密并添加到区块链中，并利用该区块链实现保险的购买。通常情况下，区块链将由点对点网络的分布式账本持有。由于时间有限，区块链架构的建立没有分布式账本的支持。分布式账本的支持。</p>
+<p>首先，医生对病人进行诊断，医疗记录的 &ldquo;交易 &ldquo;被创建并打包到新的区块。纪录的 &ldquo;交易 &ldquo;被创建并打包到一个新的区块。然后，新的区块会被加密并添加到区块链中。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">update_output</span><span class="p">(</span><span class="n">submit_n_clicks</span><span class="p">,</span> <span class="n">submit_n_clicks_timestamp</span><span class="p">,</span> <span class="n">patient_name</span><span class="p">,</span> <span class="n">patient_id</span><span class="p">,</span> <span class="n">diagnosis</span><span class="p">,</span> <span class="n">date</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">submit_n_clicks</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">global</span> <span class="n">submit_n_clicks_last</span>
+    
+    <span class="k">if</span> <span class="n">submit_n_clicks</span> <span class="o">&gt;</span> <span class="n">submit_n_clicks_last</span><span class="p">:</span>
+
+        <span class="n">submit_n_clicks_last</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># 导入区块链</span>
+        <span class="n">blockchain</span> <span class="o">=</span> <span class="n">load_blockchain</span><span class="p">()</span>
+
+        <span class="c1"># 将数据转译为Hash，保存至区块</span>
+        <span class="n">transaction</span> <span class="o">=</span> <span class="n">MedicalRecord</span><span class="p">(</span><span class="n">patient_name</span><span class="o">=</span><span class="n">patient_name</span><span class="p">,</span> <span class="n">patient_id</span><span class="o">=</span><span class="n">patient_id</span><span class="p">,</span> <span class="n">diagnosis</span><span class="o">=</span><span class="n">diagnosis</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="n">date</span><span class="p">)</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="n">Block</span><span class="p">(</span>
+            <span class="n">transactions</span><span class="o">=</span><span class="p">[</span><span class="n">transaction</span><span class="p">],</span>
+            <span class="n">prev_hash</span><span class="o">=</span><span class="n">blockchain</span><span class="o">.</span><span class="n">get_latest_block</span><span class="p">()</span><span class="o">.</span><span class="n">hash</span><span class="p">)</span>
+
+        <span class="n">block</span><span class="o">.</span><span class="n">mine</span><span class="p">(</span><span class="n">difficulty</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+        <span class="n">blockchain</span><span class="o">.</span><span class="n">add_block_to_chain</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+
+        <span class="c1"># 将区块导入区块链</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;bc.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">blockchain</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;&#34;&#34;A new block is added to blockchain.
+</span><span class="s2">                    Hash of the block:
+</span><span class="s2">                    </span><span class="si">{</span><span class="n">blockchain</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hash</span><span class="si">}</span><span class="s2">
+</span><span class="s2">        &#34;&#34;&#34;</span>
+
+</code></pre></div><p>若病人需要购买保险，病人可以选择与保险公司分享他/她存储在区块链上的医疗记录，以验证他的健康状况。</p>
+<h2 id="3ocr功能模块解析与代码实现">3.OCR功能模块解析与代码实现<a href="#3ocr功能模块解析与代码实现" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<h4 id="什么是ocr">什么是OCR<a href="#什么是ocr" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
+<p>OCR （Optical Character Recognition，光学字符识别）是指电子设备（例如扫描仪或数码相机）检查纸上打印的字符，通过检测暗、亮的模式确定其形状，然后用字符识别方法将形状翻译成计算机文字的过程；即，针对印刷体字符，采用光学的方式将纸质文档中的文字转换成为黑白点阵的图像文件，并通过识别软件将图像中的文字转换成文本格式。</p>
+<h4 id="基于ocr的保单识别">基于OCR的保单识别<a href="#基于ocr的保单识别" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
+<p>本项目采用的是百度云的OCR方案。在百度云中注册账户，开通保险单识别功能接口，采用向API服务地址使用POST发送请求的方式进行调用。</p>
+<p>用户上传保险单文件（电子版、手写版、拍照版均可），系统接收返回的保险单识别数据并展示在页面上。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">parse_contents</span><span class="p">(</span><span class="n">contents</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">date</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;jpg&#39;</span> <span class="ow">in</span> <span class="n">filename</span> <span class="ow">or</span> <span class="s1">&#39;jpeg&#39;</span> <span class="ow">in</span> <span class="n">filename</span> <span class="ow">or</span> <span class="s1">&#39;png&#39;</span> <span class="ow">in</span> <span class="n">filename</span> <span class="ow">or</span> <span class="s1">&#39;bmp&#39;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="c1"># 解析PDF文件内容</span>
+            <span class="n">content_type</span><span class="p">,</span> <span class="n">content_string</span> <span class="o">=</span> <span class="n">contents</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="n">filedata</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">content_string</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out_file</span><span class="p">:</span>
+                <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filedata</span><span class="p">)</span>
+            <span class="n">request_url</span> <span class="o">=</span> <span class="s2">&#34;https://aip.baidubce.com/rest/2.0/ocr/v1/insurance_documents&#34;</span>
+            <span class="c1"># 二进制方式打开图片文件</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+            <span class="n">host</span> <span class="o">=</span> <span class="s1">&#39;https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&amp;client_id=GGj6SdRY7FhrGZPYkpLouwEi&amp;client_secret=q9W3bKfG8oPlqjT1NX0WGKdQmbIIPH9e&#39;</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;image&#34;</span><span class="p">:</span> <span class="n">image</span><span class="p">}</span>
+            <span class="n">access_token_json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token_json</span><span class="p">[</span><span class="s2">&#34;access_token&#34;</span><span class="p">]</span>
+            <span class="n">request_url</span> <span class="o">=</span> <span class="n">request_url</span> <span class="o">+</span> <span class="s2">&#34;?access_token=&#34;</span> <span class="o">+</span> <span class="n">access_token</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;content-type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/x-www-form-urlencoded&#39;</span><span class="p">}</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">request_url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="c1"># 保存OCR数据</span>
+            <span class="k">if</span> <span class="n">response</span><span class="p">:</span>
+                <span class="n">result_data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;words_result&#39;</span><span class="p">]</span>
+                <span class="k">global</span> <span class="n">result_company</span>
+                <span class="k">global</span> <span class="n">result_InsBilNo</span>
+                <span class="k">global</span> <span class="n">result_InsBilTim</span>
+                <span class="k">global</span> <span class="n">result_InsTolAmt</span>
+                <span class="k">global</span> <span class="n">result_InsCltNa1</span>
+                <span class="k">global</span> <span class="n">result_InsIdcNb1</span>
+                <span class="k">global</span> <span class="n">result_InsIdcTy1</span>
+                <span class="k">global</span> <span class="n">result_InsCltNa2</span>
+                <span class="k">global</span> <span class="n">result_InsIdcNb2</span>
+                <span class="k">global</span> <span class="n">result_InsBthDa2</span>
+                <span class="k">global</span> <span class="n">result_InsIdcTy2</span>
+                <span class="k">global</span> <span class="n">result_InsCovDur</span>
+                <span class="k">global</span> <span class="n">result_InsIcvAmt</span>
+                <span class="k">global</span> <span class="n">result_InsPayDur</span>
+                <span class="k">global</span> <span class="n">result_InsPayFeq</span>
+                <span class="k">global</span> <span class="n">result_InsPerAmt</span>
+                <span class="k">global</span> <span class="n">result_InsPrdNam</span>
+                <span class="k">global</span> <span class="n">result_BenCltNa</span>
+                <span class="n">result_company</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsBilCom&#39;</span><span class="p">)</span>
+                <span class="n">result_InsBilNo</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsBilNo&#39;</span><span class="p">)</span>
+                <span class="n">result_InsBilTim</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsBilTim&#39;</span><span class="p">)</span>
+                <span class="n">result_InsTolAmt</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsTolAmt&#39;</span><span class="p">)</span>
+                <span class="n">result_InsCltNa1</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsCltNa1&#39;</span><span class="p">)</span>
+                <span class="n">result_InsIdcNb1</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsIdcNb1&#39;</span><span class="p">)</span>
+                <span class="n">result_InsIdcTy1</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsIdcTy1&#39;</span><span class="p">)</span>
+                <span class="n">result_InsCltNa2</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPerLst&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsCltNa2&#39;</span><span class="p">)</span>
+                <span class="n">result_InsIdcNb2</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPerLst&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsCltNb2&#39;</span><span class="p">)</span>
+                <span class="n">result_InsBthDa2</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPerLst&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsBthDa2&#39;</span><span class="p">)</span>
+                <span class="n">result_InsIdcTy2</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPerLst&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsIdcTy2&#39;</span><span class="p">)</span>
+                <span class="n">result_InsCovDur</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPrdList&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsCovDur&#39;</span><span class="p">)</span>
+                <span class="n">result_InsIcvAmt</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPrdList&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsIcvAmt&#39;</span><span class="p">)</span>
+                <span class="n">result_InsPayDur</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPrdList&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPayDur&#39;</span><span class="p">)</span>
+                <span class="n">result_InsPayFeq</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPrdList&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPayFeq&#39;</span><span class="p">)</span>
+                <span class="n">result_InsPerAmt</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPrdList&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPerAmt&#39;</span><span class="p">)</span>
+                <span class="n">result_InsPrdNam</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPrdList&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;InsPrdNam&#39;</span><span class="p">)</span>
+                <span class="n">result_BenCltNa</span> <span class="o">=</span> <span class="n">result_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;BenPerLst&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;BenCltNa&#39;</span><span class="p">)</span>
+
+                <span class="c1"># 根据提取内容制作表格，返回值为html.table</span>
+                <span class="n">row1</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Company Name&#34;</span><span class="p">),</span> <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_company</span><span class="p">)])</span>
+                <span class="n">row2</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Insurance policy number&#34;</span><span class="p">),</span> <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsBilNo</span><span class="p">)])</span>
+                <span class="n">row3</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Insured amount&#34;</span><span class="p">),</span> <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsTolAmt</span><span class="p">)])</span>
+                <span class="n">row4</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Policyholder&#34;</span><span class="p">),</span> <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsCltNa1</span><span class="p">)])</span>
+                <span class="n">row5</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Effective date of the policy&#34;</span><span class="p">),</span>
+                                <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsBilTim</span><span class="p">)])</span>
+                <span class="n">row6</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;ID number of the Policyholder&#34;</span><span class="p">),</span>
+                                <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsIdcNb1</span><span class="p">)])</span>
+                <span class="n">row7</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Type of Policyholder&#39;s Document&#34;</span><span class="p">),</span>
+                                <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsIdcTy1</span><span class="p">)])</span>
+
+                <span class="n">row8</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;The insured&#34;</span><span class="p">),</span> <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsCltNa2</span><span class="p">)])</span>
+                <span class="n">row9</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;ID number of the insured&#34;</span><span class="p">),</span> <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsIdcNb2</span><span class="p">)])</span>
+                <span class="n">row9_1</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Date of Birth of the Insured&#34;</span><span class="p">),</span>
+                                  <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsBthDa2</span><span class="p">)])</span>
+                <span class="n">row9_2</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Type of Insured&#39;s Document&#34;</span><span class="p">),</span>
+                                  <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsIdcTy2</span><span class="p">)])</span>
+
+                <span class="n">row10</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Insurance period&#34;</span><span class="p">),</span> <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsCovDur</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;word-break&#34;</span><span class="p">:</span> <span class="s2">&#34;break-all&#34;</span><span class="p">})])</span>
+                <span class="n">row11</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Basic insurance amount&#34;</span><span class="p">),</span> <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsIcvAmt</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;word-break&#34;</span><span class="p">:</span> <span class="s2">&#34;break-all&#34;</span><span class="p">})])</span>
+                <span class="n">row12</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Payment period&#34;</span><span class="p">),</span> <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsPayDur</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;word-break&#34;</span><span class="p">:</span> <span class="s2">&#34;break-all&#34;</span><span class="p">})])</span>
+                <span class="n">row13</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Frequency of payment&#34;</span><span class="p">),</span> <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsPayFeq</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;word-break&#34;</span><span class="p">:</span> <span class="s2">&#34;break-all&#34;</span><span class="p">})])</span>
+                <span class="n">row14</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Amount of payment per period&#34;</span><span class="p">),</span>
+                                 <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsPerAmt</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;word-break&#34;</span><span class="p">:</span> <span class="s2">&#34;break-all&#34;</span><span class="p">})])</span>
+                <span class="n">row15</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Product name&#34;</span><span class="p">),</span> <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_InsPrdNam</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;word-break&#34;</span><span class="p">:</span> <span class="s2">&#34;break-all&#34;</span><span class="p">})])</span>
+
+                <span class="n">row16</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="s2">&#34;Beneficiary&#39;s name&#34;</span><span class="p">),</span> <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">result_BenCltNa</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;word-break&#34;</span><span class="p">:</span> <span class="s2">&#34;break-all&#34;</span><span class="p">})])</span>
+
+                <span class="n">table_body1</span> <span class="o">=</span> <span class="p">[</span><span class="n">html</span><span class="o">.</span><span class="n">Tbody</span><span class="p">([</span><span class="n">row1</span><span class="p">,</span> <span class="n">row2</span><span class="p">,</span> <span class="n">row3</span><span class="p">,</span> <span class="n">row4</span><span class="p">,</span> <span class="n">row5</span><span class="p">,</span> <span class="n">row6</span><span class="p">,</span> <span class="n">row7</span><span class="p">])]</span>
+                <span class="n">table1</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Table</span><span class="p">(</span><span class="n">table_body1</span><span class="p">,</span> <span class="n">bordered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="n">table_body2</span> <span class="o">=</span> <span class="p">[</span><span class="n">html</span><span class="o">.</span><span class="n">Tbody</span><span class="p">([</span><span class="n">row8</span><span class="p">,</span> <span class="n">row9</span><span class="p">,</span> <span class="n">row9_1</span><span class="p">,</span> <span class="n">row9_2</span><span class="p">])]</span>
+                <span class="n">table2</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Table</span><span class="p">(</span><span class="n">table_body2</span><span class="p">,</span> <span class="n">bordered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="n">table_body3</span> <span class="o">=</span> <span class="p">[</span><span class="n">html</span><span class="o">.</span><span class="n">Tbody</span><span class="p">([</span><span class="n">row15</span><span class="p">,</span> <span class="n">row10</span><span class="p">,</span> <span class="n">row11</span><span class="p">,</span> <span class="n">row12</span><span class="p">,</span> <span class="n">row13</span><span class="p">,</span> <span class="n">row14</span><span class="p">])]</span>
+                <span class="n">table3</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Table</span><span class="p">(</span><span class="n">table_body3</span><span class="p">,</span> <span class="n">bordered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="n">table_body4</span> <span class="o">=</span> <span class="p">[</span><span class="n">html</span><span class="o">.</span><span class="n">Tbody</span><span class="p">([</span><span class="n">row16</span><span class="p">])]</span>
+                <span class="n">table4</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Table</span><span class="p">(</span><span class="n">table_body4</span><span class="p">,</span> <span class="n">bordered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+                <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="s2">&#34;Please upload pictures in jpg/jpeg/png/bmp format&#34;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&#34;danger&#34;</span><span class="p">)</span>
+            <span class="p">])</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+            <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="s1">&#39;There was an error processing this file.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&#34;danger&#34;</span><span class="p">)</span>
+        <span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">H2</span><span class="p">(</span><span class="s1">&#39;basic information&#39;</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Hr</span><span class="p">(),</span>
+        <span class="n">table1</span><span class="p">,</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">H2</span><span class="p">(</span><span class="s1">&#39;Insured Information&#39;</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Hr</span><span class="p">(),</span>
+        <span class="n">table2</span><span class="p">,</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">H2</span><span class="p">(</span><span class="s1">&#39;Insurance information&#39;</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Hr</span><span class="p">(),</span>
+        <span class="n">table3</span><span class="p">,</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">H2</span><span class="p">(</span><span class="s1">&#39;Beneficiary information&#39;</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Hr</span><span class="p">(),</span>
+        <span class="n">table4</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="p">)</span>
+</code></pre></div><p>之后，用户可以选择存储保单识别后的信息到数据库中，便于保单管理。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">store</span><span class="p">(</span><span class="n">n_clicks_store</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">username</span>
+    <span class="k">if</span> <span class="n">n_clicks_store</span> <span class="ow">and</span> <span class="n">n_clicks_store</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
+            <span class="n">username</span> <span class="o">=</span> <span class="n">current_user</span><span class="o">.</span><span class="n">username</span>
+        <span class="n">f_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./&#39;</span><span class="o">+</span><span class="n">username</span><span class="o">+</span><span class="s1">&#39;_policy.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;a+&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span>
+        <span class="n">csv_writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f_out</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="s1">&#39;./&#39;</span><span class="o">+</span><span class="n">username</span><span class="o">+</span><span class="s1">&#39;_policy.csv&#39;</span><span class="p">):</span>
+            <span class="n">csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">username</span><span class="p">,</span> <span class="n">result_company</span><span class="p">,</span> <span class="n">result_InsBilNo</span><span class="p">,</span> <span class="n">result_InsTolAmt</span><span class="p">,</span> <span class="n">result_InsCltNa1</span><span class="p">,</span> <span class="n">result_InsBilTim</span><span class="p">,</span>
+                                 <span class="n">result_InsIdcNb1</span><span class="p">,</span> <span class="n">result_InsIdcTy1</span><span class="p">,</span> <span class="n">result_InsCltNa2</span><span class="p">,</span> <span class="n">result_InsIdcNb2</span><span class="p">,</span>
+                                 <span class="n">result_InsBthDa2</span><span class="p">,</span> <span class="n">result_InsIdcTy2</span><span class="p">,</span> <span class="n">result_InsCovDur</span><span class="p">,</span> <span class="n">result_InsIcvAmt</span><span class="p">,</span>
+                                 <span class="n">result_InsPayDur</span><span class="p">,</span> <span class="n">result_InsPayFeq</span><span class="p">,</span> <span class="n">result_InsPerAmt</span><span class="p">,</span> <span class="n">result_InsPrdNam</span><span class="p">,</span>
+                                 <span class="n">result_BenCltNa</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&#34;username&#34;</span><span class="p">,</span> <span class="s2">&#34;Company Name&#34;</span><span class="p">,</span> <span class="s2">&#34;Insurance policy number&#34;</span><span class="p">,</span> <span class="s2">&#34;Insured amount&#34;</span><span class="p">,</span> <span class="s1">&#39;Policyholder&#39;</span><span class="p">,</span> <span class="s1">&#39;Effective date of the policy&#39;</span> <span class="p">,</span><span class="s1">&#39;ID number of the Policyholder &#39;</span><span class="p">,</span> <span class="s1">&#39;Type of Policyholder</span><span class="se">\&#39;</span><span class="s1">s Document&#39;</span><span class="p">,</span> <span class="s1">&#39;The insured&#39;</span><span class="p">,</span> <span class="s1">&#39;ID number of the insured&#39;</span><span class="p">,</span> <span class="s1">&#39;Date of Birth of the Insured&#39;</span><span class="p">,</span> <span class="s1">&#39;Type of Insured</span><span class="se">\&#39;</span><span class="s1">s Document&#39;</span><span class="p">,</span> <span class="s1">&#39;Insurance period&#39;</span><span class="p">,</span> <span class="s1">&#39;Basic insurance amount&#39;</span><span class="p">,</span> <span class="s1">&#39;Payment period&#39;</span><span class="p">,</span> <span class="s1">&#39;Frequency of payment&#39;</span><span class="p">,</span> <span class="s1">&#39;Amount of payment per period&#39;</span><span class="p">,</span> <span class="s1">&#39;Product name&#39;</span><span class="p">,</span> <span class="s1">&#39;Beneficiary</span><span class="se">\&#39;</span><span class="s1">s name&#39;</span><span class="p">])</span>
+            <span class="n">csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">username</span><span class="p">,</span> <span class="n">result_company</span><span class="p">,</span> <span class="n">result_InsBilNo</span><span class="p">,</span> <span class="n">result_InsTolAmt</span><span class="p">,</span> <span class="n">result_InsCltNa1</span><span class="p">,</span> <span class="n">result_InsBilTim</span><span class="p">,</span>
+                                 <span class="n">result_InsIdcNb1</span><span class="p">,</span> <span class="n">result_InsIdcTy1</span><span class="p">,</span> <span class="n">result_InsCltNa2</span><span class="p">,</span> <span class="n">result_InsIdcNb2</span><span class="p">,</span>
+                                 <span class="n">result_InsBthDa2</span><span class="p">,</span> <span class="n">result_InsIdcTy2</span><span class="p">,</span> <span class="n">result_InsCovDur</span><span class="p">,</span> <span class="n">result_InsIcvAmt</span><span class="p">,</span>
+                                 <span class="n">result_InsPayDur</span><span class="p">,</span> <span class="n">result_InsPayFeq</span><span class="p">,</span> <span class="n">result_InsPerAmt</span><span class="p">,</span> <span class="n">result_InsPrdNam</span><span class="p">,</span>
+                                 <span class="n">result_BenCltNa</span><span class="p">])</span>
+
+        <span class="c1"># 返回OK</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+</code></pre></div><h2 id="4nlp模块功能解析与代码实现">4.NLP模块功能解析与代码实现<a href="#4nlp模块功能解析与代码实现" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>该模块为另一位同学负责开发，我不是很熟悉，就不详细解释了，具体信息在代码库和文档中。</p>
+
+			</div>
+
+<div class="related-posts thin">
+	<h2></h2>
+	<ul>
+	
+	<li><a href="/posts/guide_git/">博客搭建与部署指南</a></li>
+	
+	</ul>
+</div>
+
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://2318454078.github.io/tags/python">python</a></span><span class="tag"><a href="https://2318454078.github.io/tags/ocr">OCR</a></span><span class="tag"><a href="https://2318454078.github.io/tags/nlp">NLP</a></span><span class="tag"><a href="https://2318454078.github.io/tags/blockchain">Blockchain</a></span><span class="tag"><a href="https://2318454078.github.io/tags/%E5%AD%A6%E4%B9%A0">学习</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>4097字 阅读约 9分钟</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2022-01-22 22:20 &#43;0800</p>
+			</footer>
+		</article>
+		<aside id="toc">
+			<div class="toc-title"></div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1项目架构dash">1.项目架构（Dash）</a></li>
+    <li><a href="#2区块链模块功能解析与代码实现">2.区块链模块功能解析与代码实现</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#3ocr功能模块解析与代码实现">3.OCR功能模块解析与代码实现</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#4nlp模块功能解析与代码实现">4.NLP模块功能解析与代码实现</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="next-post" href="https://2318454078.github.io/posts/study_statistics/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;</span><br><span>&lt;金融数据分析学习笔记01&gt;概率论、统计学与资产回报率</span>
+			</a>
+			<a class="prev-post" href="https://2318454078.github.io/posts/project_capmtimeselection/">
+				<span class="post-nav-label">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>基于CAPM的风险收益一致性择时模型（Python实现）</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2022 <a href="https://2318454078.github.io/">HYJ</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://2318454078.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+	<script type="text/javascript"
+	src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+
+	<script src="https://2318454078.github.io/js/bundle.min.7d8545daa55d62427355498dd8da13f98ff79a7938ce7d2a5e2ae1ec0de3beb8.js" integrity="sha256-fYVF2qVdYkJzVUmN2NoT+Y/3mnk4zn0qXirh7A3jvrg=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>
